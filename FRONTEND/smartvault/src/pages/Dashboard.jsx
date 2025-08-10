@@ -14,10 +14,14 @@ import {
   ImageDownIcon,
 } from "lucide-react";
 import Footer from "../smallComponents/Footer.jsx";
-import { useNavigate } from "react-router-dom"; // ✅ NEW IMPORT
+import { useNavigate } from "react-router-dom"; 
 
 const Dashboard = () => {
-  const navigate = useNavigate(); // ✅ NEW HOOK
+  const navigate = useNavigate(); 
+
+  
+
+  
 
   const stats = [
     {
@@ -100,7 +104,7 @@ const Dashboard = () => {
           className="bg-blue-400 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
           onClick={() => navigate("/PasswordManager")}
         >
-          <h3>Password Store</h3>
+          <h3>Password Manager</h3>
         </button>
 
         <button
@@ -110,7 +114,8 @@ const Dashboard = () => {
           <h3>Password Generator</h3>
         </button>
 
-        <button className="bg-purple-700 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <button className="bg-purple-700 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+        onClick={()=> navigate("/notesApp")}>
           <h3>Notes Manager</h3>
         </button>
       </div>

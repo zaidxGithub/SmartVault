@@ -2,6 +2,9 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx";
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
+import HomeNotes from "./components/NotesApp/HomeNotes.jsx";
+import NotesWrapper from "./components/NotesApp/NotesWrapper.jsx";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -10,6 +13,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
+import NotesApp from "./components/NotesApp/NotesApp.jsx";
 
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true); 
@@ -51,22 +55,13 @@ function App() {
             )
           }
         />
+
+       
+        
       </Routes>
     </Router>
   );
 
-  // if(!isUserLoggedIn){
-  //   return(
-  //     <div>
-  //       <Login />
-  //     </div>
-  //   )
-  // }
-  //  return(
-  //     <div>
-  //       <Home/>
-  //     </div>
-  //   )
 }
 
 export default App;
