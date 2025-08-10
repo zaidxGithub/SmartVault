@@ -3,17 +3,17 @@ import Home from "./pages/Home.jsx";
 import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx";
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
 import HomeNotes from "./components/NotesApp/HomeNotes.jsx";
-import NotesWrapper from "./components/NotesApp/NotesWrapper.jsx";
 
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
+  replace,
 } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
-import NotesApp from "./components/NotesApp/NotesApp.jsx";
+import NotesRoutes from "./routes/NotesRoutes.jsx";
 
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true); 
@@ -51,11 +51,20 @@ function App() {
             isUserLoggedIn ? (
               <PasswordManager />
             ) : (
-              <Navigate to="/login" replace />
+              <Navigate to="/login"  />
             )
           }
         />
-
+        <Route
+        // base url of  the note manager app
+          path="/noteshome/*"
+          element={
+            
+              <NotesRoutes/> 
+            
+          } 
+        />
+       
        
         
       </Routes>

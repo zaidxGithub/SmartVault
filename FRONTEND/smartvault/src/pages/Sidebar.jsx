@@ -18,7 +18,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSectionChange }) => {
               }
              
               function gotoSecureNotespage(){
-                naviagte("/notesApp")
+                naviagte("/noteshome")
               }
 
 
@@ -84,7 +84,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSectionChange }) => {
               >  
                 {/* <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} /> */}
                   < PhoneCall className='h-5 w-5 '/>
-                <span className="font-medium"> Secure Notes</span>
+                <span className="font-medium"> Notes Manager</span>
 
                 
               </button>
@@ -106,7 +106,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSectionChange }) => {
                     // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
               >  
                < ListTodo className='h-5 w-5 '/>
-                <span className="font-medium"> Notes App</span>
+                <span className="font-medium"> File Manager</span>
 
                 
               </button>

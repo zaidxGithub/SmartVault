@@ -14,11 +14,23 @@ import {
   ImageDownIcon,
 } from "lucide-react";
 import Footer from "../smallComponents/Footer.jsx";
-import { useNavigate } from "react-router-dom"; 
+import { replace, useNavigate } from "react-router-dom"; 
 
 const Dashboard = () => {
   const navigate = useNavigate(); 
-
+  function gotoHomePage(){
+                navigate("/")
+              }
+              function gotoPasswordManagerPage(){
+                navigate("/passwordManager")
+              }
+              function gotoPasswordGeneratorPage(){
+                navigate("/PasswordGenerator")
+              }
+             
+              function gotoSecureNotespage(){
+                navigate("/noteshome")
+              }
   
 
   
@@ -102,20 +114,20 @@ const Dashboard = () => {
 
         <button
           className="bg-blue-400 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-          onClick={() => navigate("/PasswordManager")}
+          onClick={gotoPasswordManagerPage}
         >
           <h3>Password Manager</h3>
         </button>
 
         <button
           className="bg-amber-600 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-          onClick={() => navigate("/PasswordGenerator")} // ✅ NEW CLICK HANDLER
+          onClick={gotoPasswordGeneratorPage} // ✅ NEW CLICK HANDLER
         >
           <h3>Password Generator</h3>
         </button>
 
         <button className="bg-purple-700 p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
-        onClick={()=> navigate("/notesApp")}>
+        onClick={gotoSecureNotespage}>
           <h3>Notes Manager</h3>
         </button>
       </div>
