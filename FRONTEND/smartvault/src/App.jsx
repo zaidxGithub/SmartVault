@@ -4,6 +4,8 @@ import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx"
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
 import HomeNotes from "./components/NotesApp/HomeNotes.jsx";
 
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   BrowserRouter as Router,
   Routes,

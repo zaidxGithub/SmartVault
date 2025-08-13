@@ -7,60 +7,78 @@ import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useNotesLogic } from './noteLogic';
 import { useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import { getNoteById,updateNoteById } from './noteLogic';
+import { useParams } from 'react-router-dom';
 
 
 
 
-const CreateNote = () => {
+const UpdateNote = () => {
+
+    const {id}=useParams();
+    const navigate=useNavigate();
+
+
+
     
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  try {
+    useEffect(() => {
+       const notes=JSON.parse(localStorage.getItem("notes"))||[]
+       console.log("ALL NOTES FETCHED:",notes)
+
+      const note =notes.find((storedNote)=>String(storedNote.id)===String(id))
+      
+
+      if (note) {
+        setTitle(note.title);
+        setContent(note.content);
+      } else{
+          console.log(" Old note not found :");
+      }
+    }, [id]);
+  } catch (error) {
+    console.log("there some error in useEfffect of Updatenote.jsx :",error)
+    
+  }
+
+
+
+
+  const handleUpdate=()=>{
+    updateNoteById(id, {
+      title,
+      content,
+      date: new Date().toLocaleDateString(),
+    });
+    toast.success("Note Updated SuccessFully")
+    setTimeout(()=>{
+    navigate("/notesHome");
+
+
+    },1000)
+  };
    
 
- const navigate = useNavigate();
-
-    const {
-    notes,
-    title,
-    content,
-    setTitle,
-    setContent,
-    editIndex,
-    createNote,
-    updateNote,
-    deleteNote,
-    editNote,
-  } = useNotesLogic();
-
-
+   
    
 
     return (
-        <div className="min-h-screen bg-[#0d1117] p-6 ">
-                  <ToastContainer 
-             position="top-center"  // 👈 change this
-  
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-      
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-            />
-           
+        <div className="min-h-screen bg-[#0d1117] p-6">
             <div className="max-w-3xl mx-auto bg-[#161b22] rounded-lg shadow-lg border border-[#30363d]">
-                 
+                  <ToastContainer />
                 <div className="p-6 border-b border-[#30363d]">
-                    <h2 className="text-2xl font-bold text-[#c9d1d9]">NEW NOTE</h2>
+                    <h2 className="text-2xl font-bold text-[#c9d1d9] ">UPDATE NOTE</h2>
                 </div>
                 
                 <div className="p-6 space-y-6">
-                     
                     {/* TITLE */}
                     <div className="space-y-3">
                         <div>
-                            <h3 className="text-lg font-semibold text-[#c9d1d9]">TITLE</h3>
+                            <h3 className="text-lg font-semibold text-[#c9d1d9]"> NEW TITLE</h3>
                         </div>
                         <div>
                             <input  
@@ -73,7 +91,7 @@ const CreateNote = () => {
                         <div className="text-sm flex flex-row justify-between"> 
                             <div> 
                                 {title === "" ? (
-                                    <p className="text-[#f03c3ce8]">* Title </p>
+                                    <p className="text-[#f85149]">* Title </p>
                                 ) : (
                                     <p className="text-[#c9d1d9]">{title.length}</p>
                                 )}
@@ -84,23 +102,23 @@ const CreateNote = () => {
                     {/* CONTENT */}
                     <div className="space-y-3">
                         <div>
-                            <p className="text-lg font-semibold text-[#c9d1d9]">CONTENT</p>
+                            <p className="text-lg font-semibold text-[#c9d1d9]"> NEW CONTENT</p>
                         </div>
                         <div>
                             <textarea 
                                 name="newnotetextbox"
                                 onChange={(e) => setContent(e.target.value)}
-                                value= {content}
+                                value={content}
                                 className="w-full px-4 py-2 bg-[#0d1117] border border-[#30363d] rounded-md focus:ring-2 focus:ring-[#58a6ff] focus:border-[#58a6ff] outline-none transition-colors text-[#c9d1d9] placeholder-[#8b949e] min-h-75 resize-vertical"
                             ></textarea>
-                             {content === "" ? (
-                                    <p className="text-[#f03c3ce8]">* Content</p>
-                                ) : (
-                                    <p className="text-[#c9d1d9]">{title.length}</p>
-                                )}
                         </div>
                         <div>
-                            <p className="text-[#8b949e]">{content.length}</p> 
+                            {content === "" ? (
+                                    <p className="text-[#f85149]">* Title </p>
+                                ) : (
+                                    <p className="text-[#c9d1d9]">{content.length}</p>
+                                )}
+                           
                         </div>
                     </div>
                     
@@ -113,14 +131,13 @@ const CreateNote = () => {
                             >
                                 Cancel
                             </button>
-                              
                         </div>
                         <div>
                             <button
-                                onClick={createNote}
+                                onClick={handleUpdate}
                                 className="px-6 py-2 bg-[#238636] text-white rounded-md hover:bg-[#2ea043] focus:ring-2 focus:ring-[#2ea043] focus:ring-offset-2 focus:ring-offset-[#0d1117] transition-colors"
                             >
-                                Save Note
+                                Update Note
                             </button>
                         </div>
                     </div>
@@ -130,4 +147,4 @@ const CreateNote = () => {
     )
 }
 
-export default CreateNote
+export default UpdateNote
