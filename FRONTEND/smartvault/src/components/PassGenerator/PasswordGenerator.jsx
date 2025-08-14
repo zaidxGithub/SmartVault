@@ -55,42 +55,40 @@ const PasswordGenerator = () => {
   };
 
   return (
-    <div className="bg-gray-100 rounded-xl shadow-1g border-b-black max-w-lg mx-auto overflow-hidden mt-20">
-      {/* Header */}
+    <div className="min-h-screen bg-[#0d1117] flex items-start justify-center p-4 sm:p-8">
+      <div className="bg-[#161b22] rounded-2xl shadow-lg w-full max-w-4xl p-6 sm:p-10 border border-[#30363d]">
+        {/* Header */}
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#c9d1d9] flex items-center gap-2">
+            🔐 Password Generator
+          </h2>
+          <p className="text-[#8b949e] text-sm sm:text-base">
+            Create strong & secure passwords
+          </p>
+        </div>
 
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          🔐 Password Generator
-        </h2>
-        <p className="text-white/80 text-sm">
-          Create strong & secure passwords
-        </p>
-      </div>
-
-      {/* Body */}
-      <div className="p-6 space-y-6">
-        {/* Password display */}
-        <div className="relative">
+        {/* Password Display */}
+        <div className="relative mb-6">
           <input
             type="text"
             value={password}
             readOnly
-            className="w-full bg-gray-100 rounded-lg p-3 pr-12 font-mono text-lg border focus:outline-none"
+            className="w-full bg-[#0d1117] text-[#c9d1d9] rounded-md p-3 sm:p-4 pr-12 font-mono text-base sm:text-lg border border-[#30363d] focus:outline-none focus:ring-2 focus:ring-[#58a6ff]"
           />
           <button
             onClick={copyToClipboard}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-green-600 hover:text-green-800"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#58a6ff] hover:text-[#79c0ff]"
           >
-            {copied ? <Check /> : <Copy />}
+            {copied ? <Check size={20} /> : <Copy size={20} />}
           </button>
+          {copied && (
+            <p className="text-[#3fb950] text-sm text-center mt-2">Copied!</p>
+          )}
         </div>
-        {copied && (
-          <p className="text-green-600 text-sm text-center">Copied!</p>
-        )}
 
         {/* Length Slider */}
-        <div>
-          <label className="block text-gray-700 font-medium">
+        <div className="mb-6">
+          <label className="block text-[#c9d1d9] font-medium mb-2">
             Length: {length}
           </label>
           <input
@@ -99,12 +97,12 @@ const PasswordGenerator = () => {
             max="32"
             value={length}
             onChange={(e) => setLength(Number(e.target.value))}
-            className="w-full accent-blue-500"
+            className="w-full accent-[#58a6ff]"
           />
         </div>
 
         {/* Options */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           {[
             {
               label: "Include Uppercase",
@@ -124,14 +122,16 @@ const PasswordGenerator = () => {
           ].map((opt, idx) => (
             <label
               key={idx}
-              className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border cursor-pointer hover:bg-gray-100"
+              className="flex items-center justify-between p-3 sm:p-4 bg-[#161b22] rounded-md border border-[#30363d] cursor-pointer hover:bg-[#21262d]"
             >
-              <span className="text-gray-700">{opt.label}</span>
+              <span className="text-[#c9d1d9] text-sm sm:text-base">
+                {opt.label}
+              </span>
               <input
                 type="checkbox"
                 checked={opt.checked}
                 onChange={opt.toggle}
-                className="w-5 h-5 accent-blue-500"
+                className="w-5 h-5 accent-[#58a6ff]"
               />
             </label>
           ))}
@@ -141,7 +141,7 @@ const PasswordGenerator = () => {
         <button
           onClick={generatePassword}
           disabled={!includeUppercase && !includeNumbers && !includeSymbols}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-[#238636] hover:bg-[#2ea043] text-white font-semibold py-3 sm:py-4 rounded-md flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
         >
           <RefreshCcw size={18} /> Generate Password
         </button>

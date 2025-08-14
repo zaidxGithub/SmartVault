@@ -1,109 +1,153 @@
 import React, { useState, useEffect } from "react";
-import { Trash, Copy, Lock } from "lucide-react";
+import { RefreshCcw, Copy, Check } from "lucide-react";
 
-const PasswordManager = () => {
-  const [title, setTitle] = useState("");
+const PasswordGenerator = () => {
+  const [length, setLength] = useState(12);
+  const [includeUppercase, setIncludeUppercase] = useState(true);
+  const [includeNumbers, setIncludeNumbers] = useState(true);
+  const [includeSymbols, setIncludeSymbols] = useState(true);
   const [password, setPassword] = useState("");
-  const [passwords, setPasswords] = useState([]);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("passwords")) || [];
-    setPasswords(saved);
+    generatePassword();
+    // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("passwords", JSON.stringify(passwords));
-  }, [passwords]);
+  const generatePassword = () => {
+    let lower = "abcdefghijklmnopqrstuvwxyz";
+    let upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let numbers = "0123456789";
+    let symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
 
-  const addPassword = () => {
-    if (!title || !password) return alert("Please enter both fields.");
-    const newEntry = { id: Date.now(), title, password };
-    setPasswords([...passwords, newEntry]);
-    setTitle("");
-    setPassword("");
+    let charset = lower;
+    let requiredChars = [];
+
+    if (includeUppercase) {
+      charset += upper;
+      requiredChars.push(upper[Math.floor(Math.random() * upper.length)]);
+    }
+    if (includeNumbers) {
+      charset += numbers;
+      requiredChars.push(numbers[Math.floor(Math.random() * numbers.length)]);
+    }
+    if (includeSymbols) {
+      charset += symbols;
+      requiredChars.push(symbols[Math.floor(Math.random() * symbols.length)]);
+    }
+
+    let generated = requiredChars.join("");
+    for (let i = generated.length; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      generated += charset[randomIndex];
+    }
+    generated = generated
+      .split("")
+      .sort(() => Math.random() - 0.5)
+      .join("");
+    setPassword(generated);
   };
 
-  const deletePassword = (id) => {
-    setPasswords(passwords.filter((item) => item.id !== id));
-  };
-
-  const copyPassword = (text) => {
-    navigator.clipboard.writeText(text);
-    alert("Copied to clipboard!");
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(password);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-6">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 border border-gray-100">
+    <div className="min-h-screen bg-[#0d1117] flex items-start justify-center p-4 sm:p-8">
+      <div className="bg-[#161b22] rounded-2xl shadow-lg w-full max-w-4xl p-6 sm:p-10 border border-[#30363d]">
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6">
-          <Lock className="text-blue-600" size={28} />
-          <h2 className="text-3xl font-bold text-gray-800">Password Manager</h2>
+        <div className="mb-6">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#c9d1d9] flex items-center gap-2">
+            🔐 Password Generator
+          </h2>
+          <p className="text-[#8b949e] text-sm sm:text-base">
+            Create strong & secure passwords
+          </p>
         </div>
 
-        {/* Inputs */}
-        <div className="space-y-3">
+        {/* Password Display */}
+        <div className="relative mb-6">
           <input
             type="text"
-            placeholder="Website / App Name"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition rounded-lg px-4 py-2 text-gray-700"
-          />
-          <input
-            type="text"
-            placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition rounded-lg px-4 py-2 text-gray-700"
+            readOnly
+            className="w-full bg-[#0d1117] text-[#c9d1d9] rounded-md p-3 sm:p-4 pr-12 font-mono text-base sm:text-lg border border-[#30363d] focus:outline-none focus:ring-2 focus:ring-[#58a6ff]"
           />
           <button
-            onClick={addPassword}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-md transition"
+            onClick={copyToClipboard}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#58a6ff] hover:text-[#79c0ff]"
           >
-            Save Password
+            {copied ? <Check size={20} /> : <Copy size={20} />}
           </button>
-        </div>
-
-        {/* Saved Passwords */}
-        <div className="mt-6 space-y-4">
-          {passwords.length === 0 ? (
-            <p className="text-gray-500 text-sm text-center">
-              No saved passwords yet.
-            </p>
-          ) : (
-            passwords.map((item) => (
-              <div
-                key={item.id}
-                className="flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 rounded-lg border border-gray-200 transition shadow-sm"
-              >
-                <div>
-                  <p className="font-semibold text-gray-800">{item.title}</p>
-                  <p className="text-gray-600 font-mono text-sm">
-                    {item.password}
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => copyPassword(item.password)}
-                    className="text-green-600 hover:text-green-800 transition"
-                  >
-                    <Copy size={18} />
-                  </button>
-                  <button
-                    onClick={() => deletePassword(item.id)}
-                    className="text-red-600 hover:text-red-800 transition"
-                  >
-                    <Trash size={18} />
-                  </button>
-                </div>
-              </div>
-            ))
+          {copied && (
+            <p className="text-[#3fb950] text-sm text-center mt-2">Copied!</p>
           )}
         </div>
+
+        {/* Length Slider */}
+        <div className="mb-6">
+          <label className="block text-[#c9d1d9] font-medium mb-2">
+            Length: {length}
+          </label>
+          <input
+            type="range"
+            min="6"
+            max="32"
+            value={length}
+            onChange={(e) => setLength(Number(e.target.value))}
+            className="w-full accent-[#58a6ff]"
+          />
+        </div>
+
+        {/* Options */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          {[
+            {
+              label: "Include Uppercase",
+              checked: includeUppercase,
+              toggle: () => setIncludeUppercase(!includeUppercase),
+            },
+            {
+              label: "Include Numbers",
+              checked: includeNumbers,
+              toggle: () => setIncludeNumbers(!includeNumbers),
+            },
+            {
+              label: "Include Symbols",
+              checked: includeSymbols,
+              toggle: () => setIncludeSymbols(!includeSymbols),
+            },
+          ].map((opt, idx) => (
+            <label
+              key={idx}
+              className="flex items-center justify-between p-3 sm:p-4 bg-[#161b22] rounded-md border border-[#30363d] cursor-pointer hover:bg-[#21262d]"
+            >
+              <span className="text-[#c9d1d9] text-sm sm:text-base">
+                {opt.label}
+              </span>
+              <input
+                type="checkbox"
+                checked={opt.checked}
+                onChange={opt.toggle}
+                className="w-5 h-5 accent-[#58a6ff]"
+              />
+            </label>
+          ))}
+        </div>
+
+        {/* Generate Button */}
+        <button
+          onClick={generatePassword}
+          disabled={!includeUppercase && !includeNumbers && !includeSymbols}
+          className="w-full bg-[#238636] hover:bg-[#2ea043] text-white font-semibold py-3 sm:py-4 rounded-md flex items-center justify-center gap-2 transition disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+        >
+          <RefreshCcw size={18} /> Generate Password
+        </button>
       </div>
     </div>
   );
 };
 
-export default PasswordManager;
+export default PasswordGenerator;
