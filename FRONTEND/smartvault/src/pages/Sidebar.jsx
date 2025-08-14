@@ -1,13 +1,26 @@
 import React from 'react';
-import { X, Home, FileText, Lock, StickyNote, LogOut, Shield } from 'lucide-react';
+import { X, Home, FileText, Lock, StickyNote, LogOut, Shield, Icon, HomeIcon, PhoneCall, ListTodo, Workflow } from 'lucide-react';
+
+import {useNavigate} from "react-router-dom";
 
 const Sidebar = ({ isOpen, onClose, activeSection, onSectionChange }) => {
-  const menuItems = [
-    { id: 'home', label: 'Home', icon: Home },
-    { id: 'pdfs', label: 'PDF Vault', icon: FileText },
-    { id: 'passwords', label: 'Password Manager', icon: Lock },
-    { id: 'notes', label: 'Secure Notes', icon: StickyNote },
-  ];
+
+  const naviagte=useNavigate();
+              const isActive = activeSection === '';
+              function gotoHomePage(){
+                naviagte("/")
+              }
+              function gotoPasswordManagerPage(){
+                naviagte("/passwordManager")
+              }
+              function gotoPasswordGeneratorPage(){
+                naviagte("/PasswordGenerator")
+              }
+             
+              function gotoSecureNotespage(){
+                naviagte("/noteshome")
+              }
+
 
   return (
     <>
@@ -46,35 +59,74 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSectionChange }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-2">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = activeSection === item.id;
-            
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  onSectionChange(item.id);
-                  onClose();
-                }}
-                className={`
-                  w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200
-                  ${isActive 
-                    ? 'bg-blue-50 text-blue-700 border border-blue-200 shadow-sm' 
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-                  }
-                `}
-              >
-                <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} />
-                <span className="font-medium">{item.label}</span>
+
+        
+        <nav className="p-4 space-y-2 ">
+        
+              <button onClick={gotoHomePage}
+
+                className=
+                 " w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                    // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+              >  
+                  < HomeIcon className='h-5 w-5 '/>
+                <span className="font-medium"> Home</span>
+
+                
               </button>
-            );
-          })}
+              <button onClick={gotoSecureNotespage}
+
+                className=
+                 " w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                    // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+                  
+                
+              >  
+                {/* <Icon className={`w-5 h-5 ${isActive ? 'text-blue-600' : 'text-gray-500'}`} /> */}
+                  < PhoneCall className='h-5 w-5 '/>
+                <span className="font-medium"> Notes Manager</span>
+
+                
+              </button>
+              <button onClick={gotoPasswordManagerPage}
+
+                  className=
+                 " w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                    // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+              >  
+               < Lock className='h-5 w-5 '/>
+                <span className="font-medium"> Password Vault</span>
+
+                
+              </button>
+              <button 
+
+                className=
+                 " w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                    // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+              >  
+               < ListTodo className='h-5 w-5 '/>
+                <span className="font-medium"> File Manager</span>
+
+                
+              </button>
+              <button onClick={gotoPasswordGeneratorPage}
+
+                 className=
+                 " w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 bg-blue-50 text-blue-700 border border-blue-200 shadow-sm"
+                    // : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
+              >  
+               < Workflow className='h-5 w-5 '/>
+                <span className="font-medium"> Password Generator</span>
+
+                
+              </button>
+
         </nav>
+      
 
         {/* User Section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50">
+        <div className="  bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gray-50 ">
           <div className="flex items-center space-x-3 mb-3">
             <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center">
               <span className="text-white font-semibold text-sm">JD</span>
