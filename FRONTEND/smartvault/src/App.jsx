@@ -3,6 +3,8 @@ import Home from "./pages/Home.jsx";
 import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx";
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
 import HomeNotes from "./components/NotesApp/HomeNotes.jsx";
+import NotesRoutes from "./routes/NotesRoutes.jsx";
+import Navbar from "./components/Navbar/Navbar.jsx"; // ✅ Added Navbar
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,17 +13,18 @@ import {
   Routes,
   Route,
   Navigate,
-  replace,
 } from "react-router-dom";
 import "./App.css";
 import { useState } from "react";
-import NotesRoutes from "./routes/NotesRoutes.jsx";
 
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
 
   return (
     <Router>
+      {/* Navbar added here */}
+      {isUserLoggedIn && <Navbar />}
+
       <Routes>
         <Route
           path="/"
@@ -50,14 +53,14 @@ function App() {
         <Route
           path="/PasswordManager"
           element={
-            isUserLoggedIn ? <PasswordManager /> : <Navigate to="/login" />
+            isUserLoggedIn ? (
+              <PasswordManager />
+            ) : (
+              <Navigate to="/login" replace />
+            )
           }
         />
-        <Route
-          // base url of  the note manager app
-          path="/noteshome/*"
-          element={<NotesRoutes />}
-        />
+        <Route path="/noteshome/*" element={<NotesRoutes />} />
       </Routes>
     </Router>
   );
