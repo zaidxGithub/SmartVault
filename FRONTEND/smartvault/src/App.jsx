@@ -2,7 +2,6 @@ import Login from "./pages/Login.jsx";
 import Home from "./pages/Home.jsx";
 import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx";
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
-import HomeNotes from "./components/NotesApp/HomeNotes.jsx";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,6 +15,7 @@ import {
 import "./App.css";
 import { useState } from "react";
 import NotesRoutes from "./routes/NotesRoutes.jsx";
+import FileManager from "./routes/FileManager.jsx";
 
 function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(true); 
@@ -63,6 +63,15 @@ function App() {
           element={
             
               <NotesRoutes/> 
+            
+          } 
+        />
+        <Route
+        // base url of  the note manager app
+          path="/filemanager/*"
+          element={
+            
+              <FileManager/> 
             
           } 
         />
