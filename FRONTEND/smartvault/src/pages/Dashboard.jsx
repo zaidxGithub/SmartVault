@@ -1,12 +1,5 @@
 
 
-
-
-
-
-
-
-
 import React from "react";
 import {
   FileText,
@@ -91,7 +84,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="w-full max-w-full flex flex-col space-y-8 p-4 sm:p-6 md:p-8 overflow-x-hidden bg-[#0d1117] text-[#c9d1d9]">
-        {/* Welcome Section */}
+     
         <div className="bg-gradient-to-r from-[#161b22] to-[#0d1117] rounded-2xl p-6 sm:p-8 text-white shadow-md">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -108,7 +101,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Quick Actions */}
+    
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {quickdata.map((eachdata, index) => {
              const Icon = eachdata.icon;
@@ -128,7 +121,7 @@ const Dashboard = () => {
 })}
         </div>
 
-        {/* Statistics */}
+        
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
 
           {stats.map((stat, index) => {
@@ -153,7 +146,7 @@ const Dashboard = () => {
           })}
         </div>
 
-        {/* Recent Activity */}
+      
         <div className="bg-[#161b22] rounded-xl shadow-md border border-[#30363d] w-full">
           <div className="p-5 sm:p-6 border-b border-[#30363d] flex items-center justify-between">
             <h2 className="text-lg sm:text-xl font-semibold text-white">Recent Activity</h2>
@@ -189,7 +182,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Tips Section */}
+       
         <div className="bg-[#161b22] rounded-xl p-5 sm:p-6 border border-[#30363d] w-full">
           <div className="flex items-start space-x-4">
             <div className="w-10 h-10 bg-[#0d1117] border border-[#30363d] rounded-full flex items-center justify-center flex-shrink-0">

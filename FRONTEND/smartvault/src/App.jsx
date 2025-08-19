@@ -4,7 +4,9 @@ import PasswordGenerator from "./components/PassGenerator/PasswordGenerator.jsx"
 import PasswordManager from "./components/PasswordStore/PasswordManager.jsx";
 
 import "react-toastify/dist/ReactToastify.css";
-
+import { auth 
+} from "./firebase.js";
+import { onAuthStateChanged } from "firebase/auth";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,9 +18,37 @@ import "./App.css";
 import { useState } from "react";
 import NotesRoutes from "./routes/NotesRoutes.jsx";
 import FileManager from "./routes/FileManager.jsx";
+import { useEffect } from "react";
 
 function App() {
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true); 
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false); 
+  const[isAuthLoading,setIsAuthLoading]=useState(true);
+
+
+
+useEffect(()=>{
+
+  const unsubscribe=onAuthStateChanged(auth,(user)=>{
+    setIsUserLoggedIn(!!user);
+    setIsAuthLoading(false);
+  });
+  return()=>unsubscribe();
+
+
+},[])
+if(isAuthLoading){
+  return <p> Checking for authentication...</p>
+}
+
+
+
+
+
+
+
+
+
+
 
   return (
     <Router>
@@ -33,28 +63,25 @@ function App() {
             isUserLoggedIn ? (
               <Navigate to="/" replace />
             ) : (
-              <Login onLogin={() => setIsUserLoggedIn(true)} />
+              <Login />
             )
           }
         />
         <Route
           path="/PasswordGenerator"
           element={
-            isUserLoggedIn ? (
-              <PasswordGenerator />
-            ) : (
+          
               <Navigate to="/login" replace />
-            )
+        
           }
         />
         <Route
           path="/PasswordManager"
           element={
-            isUserLoggedIn ? (
+           
               <PasswordManager />
-            ) : (
-              <Navigate to="/login"  />
-            )
+          
+             
           }
         />
         <Route
