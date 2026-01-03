@@ -1,29 +1,29 @@
-
-
 import mongoose from "mongoose";
 const fileSchema = new mongoose.Schema({
-  userId: { 
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
-     ref: "User",
-      required: true 
-    },
+    ref: "User",
+    required: true,
+  },
 
-  fileName: {
-     type: String, 
-     required: true 
-    },
-  fileType: {
-     type: String
-     },   // jpg, pdf, docx, etc.
-  fileSize: {
-     type: Number
-     },   // Size in bytes
-  fileUrl: { 
-    type: String 
- },    // If using cloud storage (AWS, GCP, etc.)
+  filename: { type: String, required: true },
 
- 
-  uploadedAt: { type: Date, default: Date.now }
+  originalFilename: { type: String, required: true },
+  url: {
+    type: String,
+    required: true,
+  }, 
+  secure_url: String, 
+  public_id: {
+    type: String,
+    index: true,
+  }, 
+  resource_type: String, 
+  format: String,
+  bytes: Number,
+  folder: String,
+
+  uploadedAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model("FileStore", fileSchema);
+export default mongoose.model("File", fileSchema);

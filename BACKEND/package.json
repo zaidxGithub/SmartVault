@@ -1,20 +1,24 @@
 {
   "dependencies": {
+    "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "firebase-admin": "^13.4.0",
     "fs-extra": "^11.3.1",
     "mongodb": "^6.18.0",
-    "mongoose": "^8.17.0",
+    "mongoose": "^8.17.2",
     "morgan": "^1.10.1",
     "multer": "^2.0.2",
+    "node-cron": "^4.2.1",
+    "streamifier": "^0.1.1",
     "winston": "^3.17.0"
   },
   "name": "backend",
   "version": "1.0.0",
   "description": "backend for smart vault app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "src/index.js",
     "dev": "nodemon src/index.js",
