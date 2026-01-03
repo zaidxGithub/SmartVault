@@ -1,8 +1,8 @@
 import React from 'react'
-import HomeFileManager from '../components/FIleManagerApp/pages/HomeFileManager.jsx'
+import HomeFileManager from "../components/FileManagerApp/pages/HomeFileManager.jsx";
 import {Route,Routes,Link,NavLink} from "react-router-dom";
-import UploadFile from '../components/FIleManagerApp/pages/UploadFile.jsx';
-import { FileProvider } from '../components/FIleManagerApp/context/filecontext.jsx';
+import UploadFile from '../components/FileManagerApp/pages/UploadFile.jsx';
+import { FileProvider } from '../components/FileManagerApp/context/filecontext.jsx';
 
 const FileManager = () => {
   return (
