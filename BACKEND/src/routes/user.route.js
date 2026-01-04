@@ -163,7 +163,7 @@ router.post("/register", authMiddleware, async (req, res) => {
 
     const exists = await User.findOne({ email }).session(session);
     if (exists) {
-      return res.json({ status: "User_exists", user: exists });
+      return res.json({ status: "User_exists", success:false,user: exists });
     }
 
     const user = await User.create(
@@ -185,7 +185,7 @@ router.post("/register", authMiddleware, async (req, res) => {
     await session.commitTransaction();
     session.endSession();
 
-    res.status(201).json({ success: true, user: user[0] });
+    res.status(201).json({ success: true, status:"User_Created",user: user[0] });
   } catch (error) {
     console.log("USER NOT CREATED IN MONGO!");
     const deleteMessage = await User.deleteMany({ uid: req.user.uid });
@@ -200,7 +200,7 @@ router.post("/register", authMiddleware, async (req, res) => {
     } catch (error) {
       console.error("firbase rollback failed", error.message);
     }
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message,success:false,status:"User_Creation_falied", code: "USER_CREATION_FAILED" , message: "User creation failed",});
   }
 });
 
