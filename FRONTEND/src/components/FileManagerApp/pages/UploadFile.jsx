@@ -142,7 +142,7 @@ const fileInputRef=useRef(null);
     form.append('fileName',fileDetails.name);
     
 
-    const API_URL = `${BASE_URL}/file`;
+    const API_URL = `${BASE_URL}/api/file`;
     const token=await getToken();
     try {
       const response=await fetch(API_URL,{
@@ -163,8 +163,8 @@ const fileInputRef=useRef(null);
   console.log("file data",data);
   
     } catch (error) {
-      console.log("Upalod error:",error)
-      toast.error("uplaod Failed")
+      console.log("Upload error:",error)
+      toast.error("upload Failed")
       
     }
     finally{

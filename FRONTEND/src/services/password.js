@@ -2,7 +2,7 @@ import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
  const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-  const API_URL = `${BASE_URL}/passwords`;
+  const API_URL = `${BASE_URL}/api/passwords`;
 
 const getToken=async()=>{
     if(auth.currentUser){ 
@@ -29,7 +29,7 @@ export const getAllPassword=async()=>{
 
 export const getPassStatsAPI=async()=>{
   const token=await getToken();
-  const API_URL_STATS=`${BASE_URL}/passwords/stats`;
+  const API_URL_STATS=`${BASE_URL}/api/passwords/stats`;
   const response=await fetch(API_URL_STATS,{
      method:"GET",
     headers:{

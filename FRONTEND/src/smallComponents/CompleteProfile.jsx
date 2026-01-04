@@ -31,7 +31,7 @@ const CompleteProfile = () => {
   const token = await user.getIdToken();
   const BASE_URL=import.meta.env.VITE_API_BASE_URL;
 
-  const API_URL=`${BASE_URL}/user/complete-profile`
+  const API_URL=`${BASE_URL}/api/user/complete-profile`
   console.log("Complete Profile initiated--",API_URL)
 
       const res = await fetch(API_URL, {
@@ -52,7 +52,7 @@ const CompleteProfile = () => {
       }
         await user.getIdToken(true);
 
-      // ✅ Profile completed → go home
+      //  Profile completed → go home
       navigate("/", { replace: true });
 
     } catch (err) {

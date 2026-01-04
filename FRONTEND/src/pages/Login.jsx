@@ -48,7 +48,7 @@ export default function SmartVaultAuth() {
       if (
         loginResponse.operationType == "signIn" ||
         loginResponse.operationType == "signUp"
-      ) {
+      ) {console.log(loginResponse);
         navigate("/", { replace: true });
       }
     } catch (error) {

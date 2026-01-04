@@ -1,7 +1,7 @@
 import {auth} from"../firebase.js"
 
  const BASE_URL=import.meta.env.VITE_API_BASE_URL;
- const API_URL = `${BASE_URL}/notes`;
+ const API_URL = `${BASE_URL}/api/notes`;
 
 const getToken=async()=>{
     if(auth.currentUser){ return auth.currentUser.getIdToken();}
@@ -91,7 +91,7 @@ return data;
 
 export const getTotalNoteAPI=async()=>{
   const token=await auth.currentUser.getIdToken();
-     const route=`${BASE_URL}/notes`; 
+     const route=`${BASE_URL}/api/notes`; 
      const response=await fetch( route,{
         
       headers: {

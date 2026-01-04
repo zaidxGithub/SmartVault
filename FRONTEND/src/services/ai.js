@@ -8,7 +8,7 @@ import { auth
     try {
        const token=await auth.currentUser.getIdToken();
         const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-         const API_URL = `${BASE_URL}/ai/gemini`
+         const API_URL = `${BASE_URL}/api/ai/gemini`
   
     const response=await fetch(API_URL,{
       method:"POST",

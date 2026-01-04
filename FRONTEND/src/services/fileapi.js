@@ -10,7 +10,7 @@ const getToken = async () => {
 
 export const handleDeleteAPI = async (file) => {
      const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-  const API_URL = `${BASE_URL}/file/`;
+  const API_URL = `${BASE_URL}/api/file/`;
   try {
     const currentFilePublicId = file.public_id;
     const resourceType = file.resource_type;
@@ -39,7 +39,6 @@ export const handleDeleteAPI = async (file) => {
 export const handleDownloadAPI = async (file) => {
   try {
     const response = await fetch(file.secure_url);
-    console.log(response) // cloudinary public URL
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
@@ -63,7 +62,7 @@ export const handleDownloadAPI = async (file) => {
 
 export const getEachFileDetailsAPI = async (file) => {
   const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-  const API_URL = `${BASE_URL}/file/filestats`;
+  const API_URL = `${BASE_URL}/api/file/filestats`;
   try {
     const token = await getToken();
     const response = await fetch(API_URL, {
@@ -86,7 +85,7 @@ export const getEachFileDetailsAPI = async (file) => {
 
 export const getUserFilesAPI = async (e) => {
   const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-  const API_URL = `${BASE_URL}/file`;
+  const API_URL = `${BASE_URL}/api/file`;
    
   try {
     const token = await getToken();

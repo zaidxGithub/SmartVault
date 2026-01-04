@@ -14,25 +14,35 @@ export const AppUserProvider  = ({children}) => {
   useEffect(() => {
 
     if(authLoading) return;
+    setLoading(true);
     if(!firebaseUser){
         setAppUser(null);
+        setLoading(false);
         return;
 
     }
-    if (!firebaseUser.emailVerified) {
-      setAppUser(null);
-      return;
-    }
+ 
+    let retryCount=0;
     const loadUserDetails = async () => {
       try {
         const userData = await fetchCurrentUser();
+        if(!userData && retryCount<3){
+          retryCount++;
+          setTimeout(loadUserDetails,600);
+          return;
+        }
 
         setAppUser(userData);
-        console.log(userData.photo);
+        setLoading(false);
       } catch (error) {
+        if(retryCount<3){
+          retryCount++;
+          setTimeout(loadUserDetails,600);
+          return;
+        }
         setAppUser(null);
         setLoading(false);
-        console.log(error);
+      
       }
     };
     loadUserDetails();

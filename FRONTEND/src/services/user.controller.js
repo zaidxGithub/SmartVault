@@ -30,20 +30,16 @@ export const deleteUserAPI = async (email, password) => {
   }
     
 
-    console.log("Auth response REAUTH:", authenticateResponse.user.uid);
-
-    console.log("User re Authenticated SuccesFully.");
   } catch (error) {
-    console.error("Re-auth failed:", error.code);
+    console.error("Re-auth failed:", error);
     return {
       success: false,
-      error: error.message,
+      error: error.code,
     };
   }
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const API_URL = `${BASE_URL}/user/deleteUser`;
-  console.log("API URL DELETE", API_URL);
+  const API_URL = `${BASE_URL}/api/user/deleteUser`;
 
   const token = await auth.currentUser.getIdToken();
   // console.log("TOKEN",token);
@@ -58,7 +54,6 @@ export const deleteUserAPI = async (email, password) => {
   });
 
   const deleteResponse = await response.json();
-  console.log("deleteResponse:", deleteResponse);
 
   return deleteResponse;
 };
@@ -67,26 +62,39 @@ export const deleteUserAPI = async (email, password) => {
 export const resgisterUserAPI=async(username)=>{
     const token = await auth.currentUser.getIdToken();
           const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-          const response = await fetch(`${BASE_URL}/user/register`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              username: username,
-            }),
-          });
 
-            const data = await response.json();
-            console.log("USER STATUSSS", data.status);
 
-                if (!response.ok) {
-            toast.error("Register again.")
-           throw new Error(data.error || "Registration failed");
-      }
-
-      return data;
+       
+           const response = await fetch(`${BASE_URL}/api/user/register`, {
+             method: "POST",
+             headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+             },
+             body: JSON.stringify({
+               username: username,
+             }),
+           });
+ 
+             const data = await response.json();
+             if(!response.ok){
+              throw data;
+             }
+             if(data.status==="User_exists"){
+              return{
+                success:false,
+                code:"USER_EXISTS",
+                message:"User Already Registered",
+                user:data.user
+              };
+             }
+             return{
+              success:true,
+              user:data.user,
+             }
+ 
+        
+           
 }
 
 
@@ -94,7 +102,7 @@ export const loginUserAPI=async(firebaseUser,displayName)=>{
 
     const token = await firebaseUser.getIdToken();
       const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-      const res = await fetch(`${BASE_URL}/user/login`, {
+      const res = await fetch(`${BASE_URL}/api/user/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -106,6 +114,7 @@ export const loginUserAPI=async(firebaseUser,displayName)=>{
       });
 
       const data = await res.json();
+      console.log("login response->",data)
       if (!res.ok) {
         throw new Error(data.error);
       }

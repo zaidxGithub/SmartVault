@@ -94,7 +94,7 @@ const Dashboard = () => {
       }
     };
     const fetchActivity = async () => {
-      const API_URL = `${BASE_URL}/user/activity/recent`;
+      const API_URL = `${BASE_URL}/api/user/activity/recent`;
       const token = await getToken();
       const res = await fetch(API_URL, {
         headers: {

@@ -3,7 +3,7 @@ import {auth} from"../firebase.js"
 
 export const checkUsername = async (username) => {
   const BASE_URL=import.meta.env.VITE_API_BASE_URL;
- const API_URL = `${BASE_URL}/user/checkuser?username=${encodeURIComponent(username)}`;
+ const API_URL = `${BASE_URL}/api/user/checkuser?username=${encodeURIComponent(username)}`;
   try {
     const response = await fetch(API_URL, {
       method: "GET",

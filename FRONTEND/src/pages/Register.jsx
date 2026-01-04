@@ -1,14 +1,12 @@
-import React, { useState ,useEffect} from "react";
-import {sendEmailVerification} from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import { sendEmailVerification, signOut } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
-import {
-  loginWithEmail,
-  registerWithEmail,
-} from "../services/authService.js";
+import { loginWithEmail, registerWithEmail } from "../services/authService.js";
 import { ToastContainer, toast } from "react-toastify";
-import { Eye,EyeOff, LoaderCircle } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle } from "lucide-react";
 import { resgisterUserAPI } from "../services/user.controller.js";
+
 
 export default function Register() {
   const navigate = useNavigate();
@@ -53,51 +51,61 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsregisterLoading(true);
-      const user = auth.currentUser;
+    const user = auth.currentUser;
 
     try {
       const res = await handleVerifyEmail();
+      if (res.status == "User_Registered Invalid Credentials") {
+        toast.warn("User Registered,Invalid Credentials");
+        return;
+      }
 
       if (res.status == "verification_sent") {
-         toast.success("Verification email sent. Please verify to continue.");
-         setIsregisterLoading(false);
+        toast.success("Verification email sent. Please verify to continue.");
+        setIsregisterLoading(false);
         return;
       }
       if (res.status == "exists_not_verified") {
-        toast.success("verify User Again");
-         setIsregisterLoading(false);
+        toast.success("Account exists.Verification email resent");
+        setIsregisterLoading(false);
         return;
       }
       if (res.status == "already_verified") {
-         
-        
-         const data = await resgisterUserAPI(formData.username);
-      if(data.status=="user_exists")
-            console.log(data.message);
-             setIsregisterLoading(false);
-           toast.error("User Already Registered");
+        try {
+          const data = await resgisterUserAPI(formData.username);
+
+          if (!data.success && data.code === "USER_EXISTS") {
+            toast.info("User already registered. Please login.");
+            return;
+          }
+
+          toast.success("User registered successfully");
           setTimeout(() => {
-        navigate("/login", { replace: true });
-      }, 2000);
-
-
+            navigate("/login", { replace: true });
+          }, 2000);
+        } catch (error) {
+          toast.error("Account creation failed");
+        }
       }
-
-     
     } catch (error) {
+      console.log("error in VerifyEmail", error.message);
       setIsregisterLoading(false);
       {
         if (error.code === "auth/email-already-in-use") {
-          toast.error(error.message);
+          toast.error("Account exist already with this email");
           console.error(error.message);
-          setShowWarning(true);
         } else if (error.code === "auth/invalid-email") {
           console.log("Invalid Email");
-          toast.error("Invalid Email ")
+          toast.error("Invalid Email ");
+        } else if (error.code == "auth/invalid-credential") {
+          toast.warn(error.code);
         } else {
+          toast.error(error.message);
           console.error(error.message);
         }
       }
+    } finally {
+      setIsregisterLoading(false);
     }
   };
 
@@ -106,20 +114,15 @@ export default function Register() {
       try {
         const user = await registerWithEmail(formData.email, formData.password);
         await sendEmailVerification(user);
-      
+        await signOut(auth);
+
         return {
           status: "verification_sent",
           user,
         };
       } catch (error) {
-      
         if (error.code === "auth/email-already-in-use") {
-          console.warn("User Already Exist with this Email.")
-          toast.error("User Already Exist with this Email")
-          const cred = await loginWithEmail(
-            formData.email,
-            formData.password
-          );
+          const cred = await loginWithEmail(formData.email, formData.password);
 
           const user = cred.user;
           await user.reload();
@@ -131,9 +134,9 @@ export default function Register() {
           }
 
           await sendEmailVerification(user);
-          toast.warning(
-            "Account exists but email not verified. Verification email resent."
-          );
+          // toast.warning(
+          //   "Account exists but email not verified. Verification email resent."
+          // );
           return {
             status: "exists_not_verified",
             user,
@@ -143,30 +146,34 @@ export default function Register() {
         throw error;
       }
     } catch (err) {
-      console.error(err.message);
-    }finally{
+      if (err.code === "auth/invalid-credential") {
+        return {
+          status: "User_Registered Invalid Credentials",
+        };
+      }
+    } finally {
       setIsregisterLoading(false);
     }
   };
 
-
   return (
     <div className="min-h-screen flex bg-[#f9fafb] font-sans">
-    
       <div className="w-full lg:w-[55%] flex justify-center items-center px-6 ">
         <div className="w-full max-w-xl space-y-6  ">
-             <ToastContainer
+          <ToastContainer
             position="top-center"
             hideProgressBar={true}
             newestOnTop={true}
             closeOnClick={true}
             pauseOnFocusLoss
             draggable
-           theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 
-           
-
+            theme={
+              document.documentElement.classList.contains("dark")
+                ? "dark"
+                : "light"
+            }
           />
-         
+
           <div className="flex gap-2 space-y-1 ">
             <div>
               <img
@@ -186,7 +193,6 @@ export default function Register() {
           </div>
           <ToastContainer />
 
-         
           <div>
             <h2 className="text-xl font-medium text-slate-800">Regsiter</h2>
             <p className="text-sm text-slate-500">
@@ -214,7 +220,6 @@ export default function Register() {
             </div>
           )}
 
-    
           <form className="space-y-2" onSubmit={handleSubmit}>
             <div className="space-y-1">
               <label className="text-sm font-medium text-slate-700">
@@ -243,60 +248,50 @@ export default function Register() {
                 className="w-full border border-slate-300   text-black/70 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
 
-              <div>
-               
-              </div>
-              <div>
-               
-              </div>
-              <div>
-               
-              </div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
 
-      
+            <div className="space-y-1">
+              <label className="text-sm font-medium text-slate-700">
+                Password
+              </label>
 
-<div className="space-y-1">
-  <label className="text-sm font-medium text-slate-700">
-    Password
-  </label>
-
- 
-  <div className="relative">
-    <input
-      type={showPassword ? "text" : "password"}
-      placeholder="••••••••"
-      name="password"
-      onChange={handleInputChange}
-      value={formData.password}
-      className="
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  name="password"
+                  onChange={handleInputChange}
+                  value={formData.password}
+                  className="
         w-full border border-slate-300 text-black/70
         rounded-md px-3 py-2 pr-10 text-sm
         focus:outline-none focus:ring-2 focus:ring-blue-300
       "
-    />
+                />
 
-    <button
-      type="button"
-      onClick={() => setShowPassword((prev) => !prev)}
-      className="
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="
         absolute inset-y-0 right-2 flex items-center
         text-slate-400 hover:text-slate-600
         focus:outline-none
       "
-      aria-label={showPassword ? "Hide password" : "Show password"}
-    >
-      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-    </button>
-  </div>
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
 
-
-  {!ispassValid && (
-    <p className="text-xs text-gray-500">
-      Password should be at least 6 characters
-    </p>
-  )}
-  </div>
+              {!ispassValid && (
+                <p className="text-xs text-gray-500">
+                  Password should be at least 6 characters
+                </p>
+              )}
+            </div>
             <div className="space-y-1">
               <label className="text-sm font-medium text-slate-700">
                 Confirm Password
@@ -331,13 +326,20 @@ export default function Register() {
                   : "  bg-blue-600   hover:bg-blue-700"
               }`}
             >
-              {isRegisterLoading ? (<div  className="flex items-center gap-2"> <LoaderCircle className="size-4 animate-spin"/><p>Registering...</p> </div>) : "Register"}
+              {isRegisterLoading ? (
+                <div className="flex items-center gap-2">
+                  {" "}
+                  <LoaderCircle className="size-4 animate-spin" />
+                  <p>Registering...</p>{" "}
+                </div>
+              ) : (
+                "Register"
+              )}
             </button>
           </form>
         </div>
       </div>
 
-     
       <div className="hidden lg:flex w-[45%] bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center">
         <div className="text-center px-10 space-y-4 ">
           <img

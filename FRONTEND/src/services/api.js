@@ -4,7 +4,7 @@ import {auth} from"../firebase.js"
 const createUser=async(userData)=>{
     const token=await auth.currentUser.getIdToken();
     const BASE_URL=import.meta.env.VITE_API_BASE_URL;
-    const route=`${BASE_URL}/user/register`;
+    const route=`${BASE_URL}/api/user/register`;
 
     const res= await fetch(route,{
         method:"POST",

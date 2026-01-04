@@ -27,7 +27,7 @@ const DeletePass = ({ isOpen, onClose }) => {
         setLoading(false);
         setTimeout(() => {
           setShowCredentialWarning(false);
-        }, 3000);
+        }, 8000);
 
         return;
       }
