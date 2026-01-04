@@ -1,7 +1,8 @@
 import express from "express";
+import { Router } from "express";
 import { createNote,getNotes,deleteNote ,getNoteById, updateNote ,getAllNote} from "../controllers/note/note.controller.js";
 import { verifyFirebaseUser} from "../middlewares/userMiddleware.js";
-const router=express();
+const router=express.Router();
 
 router.post("/",verifyFirebaseUser,createNote);
 router.get("/",verifyFirebaseUser,getNotes)

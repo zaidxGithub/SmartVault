@@ -1,6 +1,5 @@
 
 import express, { Router } from "express"
-const router=express();
  import multer from "multer";
  import streamefier from "streamifier"
  import path, { resolve } from"path";
@@ -12,7 +11,7 @@ const router=express();
     limits:{fileSize:10*1024*1024} //10 mb max limit
  });
  import { logActivity } from "../../utils/activity.js";
-
+const router=express.Router();
 function resolveResourceType(file) {
   const mime = file.mimetype;
 

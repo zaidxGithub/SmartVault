@@ -1,7 +1,6 @@
-import express, { response } from "express";
+import express, { response ,Router} from "express";
 import authMiddleware from "../middlewares/authMiddleware.js";
 import { User } from "../models/user.model.js";
-const router = express.Router();
 import verifyFirebaseUser from "../middlewares/userMiddleware.js";
 import mongoose from "mongoose";
 import Activity from "../models/activity.model.js";
@@ -10,6 +9,7 @@ import { Note } from "../models/note.model.js";
 import { Password } from "../models/password.model.js";
 import cloudinary from "../config/cloudinary.js"
 import admin from "../firebase/firebase.js";
+const router = express.Router();
 
 router.post("/deleteUser", authMiddleware, async (req, res) => {
   const UID = req.user?.uid;

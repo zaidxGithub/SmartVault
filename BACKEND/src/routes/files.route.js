@@ -1,5 +1,4 @@
 import express, { Router } from "express"
- const router=express();
  import multer from "multer";
 import verifyFirebaseUser from "../middlewares/userMiddleware.js"
  const storage=multer.memoryStorage();
@@ -8,8 +7,7 @@ import verifyFirebaseUser from "../middlewares/userMiddleware.js"
     limits:{fileSize:10*1024*1024} //10 mb max limit
  });
 import {getUserFile,getFileStats,deleteFile ,uploadFile} from "../controllers/file/file.controller.js";
-
-
+ const router=express.Router();
 //api/uploadd
 
  router.post("/",verifyFirebaseUser,upload.single('file'),uploadFile)
