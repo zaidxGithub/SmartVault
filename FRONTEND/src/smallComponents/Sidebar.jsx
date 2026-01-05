@@ -58,7 +58,7 @@ const Sidebar = ({
             <div className="w-8 h-8  rounded-lg flex items-center justify-center">
               {/* <Shield className="w-5 h-5 text-white" /> */}
 
-              <img className="rounded-lg" src="public/logo.png" alt="logo" />
+              <img className="rounded-lg" src="/logo.png" alt="logo" />
             </div>
             <div>
               <h2 className="text-lg font-bold text-[var(--color-sidebar-foreground)]">
