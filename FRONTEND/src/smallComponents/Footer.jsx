@@ -20,7 +20,7 @@ const Footer = () => {
                     
                     */}
                        <img className ="rounded-md"
-              src="public/favicon.ico" alt="icon" />
+              src="/public/logo.png" alt="logo" />
                   </div>
             <div>
                <p className=" text-md lg:text-md font-bold text-[var(--footer-primary))]">SmartVault</p>

@@ -110,8 +110,8 @@ export default function SmartVaultAuth() {
             <div>
               <img
                 className="size-11 block lg:hidden rounded-lg"
-                src="/favicon.ico"
-                alt="app-logo"
+                src="/logo.png"
+                alt="logo"
               />
             </div>
             <div>
@@ -265,8 +265,8 @@ export default function SmartVaultAuth() {
       <div className="hidden lg:flex w-[45%] bg-gradient-to-br from-blue-600 to-blue-800 items-center justify-center">
         <div className="text-center px-10 space-y-4 ">
           <img
-            src="/favicon.ico"
-            alt="SmartVault"
+            src="/logo.png"
+            alt="logo"
             className="w-24 mx-auto opacity-90 rounded-xl"
           />
           <h2 className="text-2xl font-semibold text-white">
