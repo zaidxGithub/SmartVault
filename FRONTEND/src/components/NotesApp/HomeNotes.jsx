@@ -93,9 +93,9 @@ const HomeNotes = () => {
         <div className="mb-1 lg-mb-0 ">
           <ToastContainer
             position="top-center"
-            hideProgressBar={false}
+            hideProgressBar={true}
             newestOnTop={true}
-            closeOnClick
+            closeOnClick={true}
             pauseOnFocusLoss
             draggable
            theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} />

@@ -77,9 +77,9 @@ const CreateNote = () => {
     <div className="min-h-screen bg-[var(--background)] p-0 sm:p-5">
       <ToastContainer
         position="top-center"
-        hideProgressBar={false}
+        hideProgressBar={true}
         newestOnTop={true}
-        closeOnClick
+        closeOnClick={true}
         pauseOnFocusLoss
         draggable
         theme={

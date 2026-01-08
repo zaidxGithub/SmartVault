@@ -114,7 +114,7 @@ export const loginUserAPI=async(firebaseUser,displayName)=>{
       });
 
       const data = await res.json();
-      console.log("login response->",data)
+      // console.log("login response->",data)
       if (!res.ok) {
         throw new Error(data.error);
       }

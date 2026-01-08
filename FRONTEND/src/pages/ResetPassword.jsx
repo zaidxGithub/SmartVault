@@ -35,9 +35,9 @@ export default function ResetPassword({ open, onClose }) {
       />
    <ToastContainer
             position="top-center"
-            hideProgressBar={false}
+            hideProgressBar={true}
             newestOnTop={true}
-            closeOnClick
+            closeOnClick={true}
             pauseOnFocusLoss
             draggable
            theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 

@@ -72,7 +72,17 @@ const DeletePass = ({ isOpen, onClose }) => {
   return (
     // Backdrop
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <ToastContainer />
+     <ToastContainer
+            position="top-center"
+            hideProgressBar={true}
+            newestOnTop={true}
+            closeOnClick={true}
+            pauseOnFocusLoss
+            draggable
+           theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 
+           
+
+          />
 
       {/* Modal */}
       <div className="w-full max-w-md rounded-xl bg-white dark:bg-neutral-900 p-6 shadow-xl transition-all duration-300 ease-in-out">
