@@ -165,9 +165,9 @@ if (viewType === "list") {
     <div className="bg-[var(--card)] rounded-xl shadow-lg shadow-blue-900/20 transition-all p-4 border border-[var(--border)]">
         <ToastContainer
             position="top-center"
-            hideProgressBar={false}
+            hideProgressBar={true}
             newestOnTop={true}
-            closeOnClick
+            closeOnClick={true}
             pauseOnFocusLoss
             draggable
            theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 

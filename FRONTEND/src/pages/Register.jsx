@@ -191,7 +191,7 @@ export default function Register() {
               </p>
             </div>
           </div>
-          <ToastContainer />
+         
 
           <div>
             <h2 className="text-xl font-medium text-slate-800">Regsiter</h2>

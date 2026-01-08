@@ -119,9 +119,9 @@ const UpdateNote = () => {
       <div className="w-full max-w-8xl mx-auto bg-[var(--card)] sm:rounded-lg shadow-lg border border-[var(--border)]">
        <ToastContainer
             position="top-center"
-            hideProgressBar={false}
+            hideProgressBar={true}
             newestOnTop={true}
-            closeOnClick
+            closeOnClick={true}
             pauseOnFocusLoss
             draggable
             theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 

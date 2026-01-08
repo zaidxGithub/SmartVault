@@ -199,10 +199,10 @@ return (
       <Header onMenuClick={() => setSidebarOpen(true)} />
       <ToastContainer
                       position="top-center"
-                      hideProgressBar={false}
+                      hideProgressBar={true}
                       newestOnTop={true}
                      
-                      closeOnClick
+                      closeOnClick={true}
                       pauseOnFocusLoss
                       draggable
                     

@@ -150,7 +150,7 @@ export default function PasswordForm() {
     <div className="fixed inset-0 bg-[var(--background)] flex z-50 sm:p-6 lg:p-10 xl:p-15 ">
       <ToastContainer
             position="top-center"
-            hideProgressBar={false}
+            hideProgressBar={true}
             newestOnTop={true}
             closeOnClick={true}
             pauseOnFocusLoss
