@@ -6,6 +6,24 @@ It is built with a modern tech stack, strong authentication, and scalable backen
 
 ---
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/85f82bd2-8faa-4584-bf71-0d61d74caa99" width="48%" />
+  <img src="https://github.com/user-attachments/assets/9c29a8ac-467a-456b-8f0d-bcb5a46afa76" width="48%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/d3900c98-0738-454f-ad53-14297546e614" width="48%" />
+  <img src="https://github.com/user-attachments/assets/b7cbf6c3-716f-4c7a-a4d5-6fd58efbf408" width="48%" />
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8612133a-3f12-481b-8e3a-5fa02cc3df29" width="48%" />
+</p>
+
+---
+
+[![Live Demo](https://img.shields.io/badge/Live%20Website-Click%20Here-brightgreen?style=for-the-badge)](https://smartvault-omega.vercel.app/)
+
 ## 📌 Key Highlights
 
 ✔ Secure authentication & authorization  
