@@ -15,6 +15,7 @@ import {
 } from "../services/authService";
 import { toast ,ToastContainer} from "react-toastify";
 import { loginUserAPI } from "../services/user.controller.js";
+import AuthLoadingScreen from "../smallComponents/authLoadingScreen.jsx";
 
 export default function SmartVaultAuth() {
   const [isRegistered, setisRegistered] = useState(true);
@@ -23,6 +24,7 @@ export default function SmartVaultAuth() {
   const [showWarning, setShowWarning] = useState(false);
   const [showReset, setShowReset] = useState(false);
   const[loading,setIsLoading]=useState(false);
+  const [googleLoading,setGoogleLoading]=useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -71,24 +73,36 @@ export default function SmartVaultAuth() {
 
   const handleGoogleAuth = async () => {
     try {
+
       //firebase acoount creation heree
       const userCredential = await loginWithGoogle();
+      //pop up has succesffully finsished
+        setGoogleLoading(true);
       const firebaseUser = userCredential.user;
       const displayName = firebaseUser.displayName;
        const res = await loginUserAPI(firebaseUser,displayName);
        if(!res){
-        toast.warn("Login Failed!")
+        toast.warn("Login Failed!");
+         setGoogleLoading(false);
+         return;
        }
 
       navigate("/", { replace: true });
     } catch (error) {
       console.warn(error);
+      setGoogleLoading(false);
     }
   };
 
 
 
   return (
+
+    <>{googleLoading &&
+  <AuthLoadingScreen
+  message="Authenticating"
+  subtitle="Securing your session"/>
+  }
     <div className="min-h-screen flex bg-[#f9fafb] font-sans">
        <ToastContainer
             position="top-center"
@@ -97,15 +111,15 @@ export default function SmartVaultAuth() {
             closeOnClick={true}
             pauseOnFocusLoss
             draggable
-           theme={document.documentElement.classList.contains("dark") ? "dark" : "light"} 
-           
+           theme={document.documentElement.classList.contains("dark") ? "dark" : "light"}
+
 
           />
-  
+
       <div className="w-full lg:w-[55%] flex justify-center items-center px-4  sm:px-6  ">
         <ResetPassword open={showReset} onClose={() => setShowReset(false)} />
         <div className="w-full max-w-xl space-y-6  py-15">
-        
+
           <div className="flex gap-2 space-y-1">
             <div>
               <img
@@ -124,7 +138,7 @@ export default function SmartVaultAuth() {
             </div>
           </div>
 
-      
+
           <div className="mt-10">
             <h2 className="text-xl font-medium text-slate-800">
               Log in to your account
@@ -139,13 +153,13 @@ export default function SmartVaultAuth() {
             </p>
           </div>
 
-       
+
           <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-2 rounded-md text-sm">
             <CheckCheck size={18} />
             <p>You have successfully logged out.</p>
           </div>
 
-         
+
           <div className="space-y-3">
             <button
               onClick={handleGoogleAuth}
@@ -159,7 +173,7 @@ export default function SmartVaultAuth() {
             </button>
           </div>
 
-         
+
           <div className="flex items-center gap-3">
             <div className="flex-1 h-px bg-slate-200" />
             <span className="text-xs text-slate-400">
@@ -185,7 +199,7 @@ export default function SmartVaultAuth() {
             </div>
           )}
 
-       
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-1">
               <label className="text-sm font-medium text-slate-700">
@@ -279,5 +293,6 @@ export default function SmartVaultAuth() {
         </div>
       </div>
     </div>
+    </>
   );
 }
