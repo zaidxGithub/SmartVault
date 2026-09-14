@@ -17,23 +17,25 @@ import {
 } from "react-router-dom";
 
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import { LoaderCircleIcon } from "lucide-react";
+import AuthLoadingScreen from "./smallComponents/authLoadingScreen.jsx";
 import "./App.css";
+import LoadingScreen from "./smallComponents/LoadingScreen.jsx";
 
 function App() {
   const ProtectedRoute = ({ children }) => {
-    const { user, loading } = useAuth();
+    const { user, loading,logoutLoading } = useAuth();
 
-    if (loading) {
-      return (
-        <div>
-          <div className="flex flex-col justify-center items-center gap-6 h-screen bg-black">
-            <p className="text-2xl text-gray-300">Authenticating...</p>
-            <LoaderCircleIcon className="size-15  text-white animate-spin"></LoaderCircleIcon>
-          </div>
-        </div>
-      );
-    }
+if (loading) {
+  return <AuthLoadingScreen />;
+}
+  if (logoutLoading) {
+    return (
+      <AuthLoadingScreen
+        message="Signing you out"
+        subtitle="Ending your secure session"
+      />
+    );
+  }
     if (!user) return <Navigate to="/login" replace />;
     return children;
   };
@@ -45,7 +47,7 @@ function App() {
       <Route path="/privacy-policy" element={<PrivacyPolicy />} />
       <Route path="/terms-and-condition" element={<Terms />} />
 
-  
+
       <Route path="/complete-profile" element={<CompleteProfile />} />
 
       <Route
