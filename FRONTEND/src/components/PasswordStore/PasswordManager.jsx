@@ -53,9 +53,9 @@ const handleCopyPassword = (text) => {
        const res= await deletePasswordAPI(id);
        setRefreshKey((prev)=>prev+1);
         setPasswords((prev) => prev.filter((p) => p._id !== id));
-        
+
         toast.success("Password deleted successfully");
-  
+
       } catch (error) {
         console.error("Error deleting password:", error);
         toast.error("Failed to delete password");
@@ -63,15 +63,15 @@ const handleCopyPassword = (text) => {
         setDeleteLoading(false);
       }
     };
-  
- 
-  
+
+
+
     const handleSharePassword = (password) => {
       const shareData = {
         title: password.title,
         text: `Username: ${password.username}\nPassword: ${password.password}`,
       };
-  
+
       if (navigator.share) {
         navigator.share(shareData).catch(() => {
           alert("Sharing failed or was cancelled");
@@ -80,7 +80,7 @@ const handleCopyPassword = (text) => {
         alert("Sharing is not supported on this device");
       }
     };
-  
+
 
  const fetchPasswords = async () => {
     try {
@@ -88,12 +88,12 @@ const handleCopyPassword = (text) => {
       if(pass?.passwords) return pass.passwords;
     } catch (error) {
       console.error("Error fetching passwords:", error);
-    } 
+    }
   };
 
   const fetchPassStats = async () => {
     try {
-     
+
       const stats = await getPassStatsAPI();
       if (!stats) {
         console.log("No stats Fetched from backed@!");
@@ -110,18 +110,18 @@ const handleCopyPassword = (text) => {
     try {
 
       setLoading(true);
-    
+
       const [passRes,statsRes]=await Promise.all([
-        
+
         fetchPasswords(),
         fetchPassStats(),
       ]);
       setPasswords(passRes);
       setPassStats(statsRes);
-      
+
     } catch (error) {
       console.log(error)
-      
+
     }finally{
       setLoading(false);
 
@@ -151,10 +151,10 @@ const handleCopyPassword = (text) => {
             onMenuClick={() => setSidebarOpen(true)}
           />
         </div>
-        
-          <LoadingScreen 
+
+          <LoadingScreen
           loading={loading}/>
-        
+
 
         <div className=" sticky sticky-top z-index:40 px-4 lg:pt-6">
           <IntroSection />
@@ -175,7 +175,7 @@ const handleCopyPassword = (text) => {
             <button
               onClick={() => navigate("/passwordmanager/create-password")}
               className="ai-glow-btn bg-[var(--hover)] group relative overflow-hidden rounded-md border border-[var(--border)] text-sm sm:text-sm mb-2 mr-2 lg:mr-9 flex items-center gap-1 sm:gap-2
-  px-2  py-2 sm:py-3 sm:px-4 font-semibold  text-[var(--foreground)] transition-all duration-300 
+  px-2  py-2 sm:py-3 sm:px-4 font-semibold  text-[var(--foreground)] transition-all duration-300
       hover:bg-[var(--hover)] hover:shadow-md"
             >
               <Plus className="size-4 sm:size-5" />
@@ -204,13 +204,13 @@ const handleCopyPassword = (text) => {
                   ? "No passwords yet"
                   : "No passwords found"}
               </h3>
-             
+
 
               {passwords?.length === 0 && (
                 <button
                   onClick={() => setIsFormOpen(true)}
-                  className="bg-[var(--accent)] text-[var(--foreground)] 
-                           px-6 py-2.5 rounded-lg font-semibold 
+                  className="bg-[var(--accent)] text-[var(--foreground)]
+                           px-6 py-2.5 rounded-lg font-semibold
                           transition-colors"
                 >
                   Add Your First Password
@@ -227,7 +227,7 @@ const handleCopyPassword = (text) => {
                   onDelete={handleDeletePassword}
                   onShare={handleSharePassword}
                   isDelete={deleteLoading}
-                 
+
                 />
               ))}
             </div>

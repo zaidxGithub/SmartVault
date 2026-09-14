@@ -14,6 +14,7 @@ import ThemeToggle from "./ThemeToggle.jsx";
 
 
 import { useAppUser } from "../context/AppUserProvider.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const Sidebar = ({
   isOpen,
@@ -27,16 +28,7 @@ const Sidebar = ({
    if (loading) return <p>Loading ...</p>;
   if (!appUser) return <p>No user found</p>;
 
-
-
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      console.log(" User loggedout  Succesfully...");
-    } catch (error) {
-      console.log("Error Loggin Out User:", error);
-    }
-  };
+  const {handleLogout}=useAuth();
 
 
   return (
@@ -51,7 +43,7 @@ const Sidebar = ({
     border-r border-[var(--color-sidebar-border)]
   `}
       >
-       
+
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[var(--color-sidebar-border)]">
           <div className="flex items-center space-x-3">
@@ -73,8 +65,8 @@ const Sidebar = ({
           <button
             onClick={onClose}
             className="lg:hidden p-2 rounded-lg
-      
-      
+
+
       hover:bg-[var(--color-sidebar-accent)] text-[var(--color-sidebar-accent-foreground)] transition-colors"
           >
             <X className="w-5 h-5" />
@@ -113,9 +105,9 @@ const Sidebar = ({
           ))}
         </nav>
         <nav className="p-4 space-y-2">
-         
+
             <NavLink
-          
+
               to={"/profile"}
               end
               className={({ isActive }) =>
@@ -129,7 +121,7 @@ const Sidebar = ({
             >
               {({ isActive }) => (
                 <>
-                <div className="flex gap-25 ">  
+                <div className="flex gap-25 ">
 
                   <div className="flex gap-2">
                     <User2Icon
@@ -143,30 +135,30 @@ const Sidebar = ({
                   </div>
 
 
-                  <div> 
+                  <div>
                     <ArrowRightIcon className="w-4 h-5 text-[var(--color-muted-foreground)]"/>
                     </div>
 
                   </div>
 
-                  
+
                 </>
               )}
-              
+
             </NavLink>
-          
+
         </nav>
 
-    
+
         <div
-          className="w-55  ml-5  flex items-center justify-center  rounded-lg 
+          className="w-55  ml-5  flex items-center justify-center  rounded-lg
   transition-all duration-200 border border-[var(--color-sidebar-border)]"
         >
           <ThemeToggle />
 
-          
+
         </div>
-        
+
 
         {/* User Section */}
         <div className="left-0 right-0 p-4 border-t border-[var(--color-sidebar-border)] mt-auto">
@@ -183,9 +175,9 @@ const Sidebar = ({
                 <UserRoundCheck className="w-5 h-5 text-[var(--color-sidebar-accent-foreground)]" />
               )}
 
-             
+
             </div>
-           
+
 
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium truncate">{appUser.username}</p>

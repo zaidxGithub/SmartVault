@@ -11,21 +11,15 @@ import {
   LogOut,
   Trash2,
 } from "lucide-react";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export const Profile = () => {
   const { appUser, loading } = useAppUser();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showDeletePassPage, setShowDeletePassPage] = useState(false);
   const menuItems = [{ label: "Home", route: "/", icon: HomeIcon }];
+  const {handleLogout}=useAuth();
 
-  const handleLogout = async () => {
-    try {
-      await signOut(auth);
-      console.log(" User loggedout  Succesfully...");
-    } catch (error) {
-      console.log("Error Loggin Out User:", error);
-    }
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
@@ -84,12 +78,12 @@ export const Profile = () => {
           <div className=" flex flex-col max-w-2xl mt-8 space-y-3 px-4  w-full ">
             <div>
               <button
-                onClick={() => handleLogout()}
+                onClick={handleLogout}
                 className="
               flex w-full  bg-[var(--card)]  items-center justify-center gap-2
               rounded-md border  border-[var(--border)] px-4 py-2
               text-sm font-medium text-[var(--foreground)]
-             
+
             "
               >
                 <LogOut size={16} />
